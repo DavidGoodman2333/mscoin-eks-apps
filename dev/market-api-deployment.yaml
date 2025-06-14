@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mscoin-market-deployment
+  name: mscoin-market-api-deployment
   namespace: data-apps
   labels:
-    app: market
+    app: market-api
 spec:
   selector:
     matchLabels:
-      app: market
-  replicas: 0
+      app: market-api
+  replicas: 1
   minReadySeconds: 60
   strategy:
     type: RollingUpdate
@@ -19,7 +19,7 @@ spec:
   template:
     metadata:
       labels:
-        app: market
+        app: market-api
     affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -31,8 +31,8 @@ spec:
                       - general
     spec:
       containers:
-        - image: 987595490691.dkr.ecr.ap-east-1.amazonaws.com/mscoin_services:market_latest
-          name: market
+        - image: 987595490691.dkr.ecr.ap-east-1.amazonaws.com/mscoin_services:market_api_latest
+          name: market-api
           imagePullPolicy: Always
           ports:
             - containerPort: 8889
