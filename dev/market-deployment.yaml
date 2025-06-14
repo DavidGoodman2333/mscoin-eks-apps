@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mscoin-market-api-deployment
+  namespace: data-apps
+  labels:
+    app: market-api
+spec:
+  selector:
+    matchLabels:
+      app: market-api
+  replicas: 1
+  minReadySeconds: 60
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: market-api
+    affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: nodegroup
+                    operator: In
+                    values:
+                      - general
+    spec:
+      containers:
+        - image: 987595490691.dkr.ecr.ap-east-1.amazonaws.com/mscoin_services:market_latest
+          name: market-api
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8889
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 500m
+              memory: 500Mi
+            limits:
+              cpu: 1000m
+              memory: 1000Mi
