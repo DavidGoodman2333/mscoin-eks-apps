@@ -31,7 +31,7 @@ spec:
                       - general
     spec:
       containers:
-        - image: 987595490691.dkr.ecr.ap-east-1.amazonaws.com/mscoin_services:market_api_latest
+        - image: 987595490691.dkr.ecr.ap-east-1.amazonaws.com/mscoin_services:market_api_13
           name: market-api
           imagePullPolicy: Always
           ports:
